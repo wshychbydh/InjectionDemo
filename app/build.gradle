@@ -1,0 +1,48 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    defaultConfig {
+        applicationId "com.app.demo.inject"
+        minSdkVersion 15
+        targetSdkVersion 25
+    }
+}
+
+dependencies {
+    /*请使用最新的版本，旧的版本可能会有功能缺陷*/
+    implementation 'com.github.wshychbydh:ActionMonitor:1.1.4'
+}
+
+ext {
+    //如果Injection的包名是com.plugin.inject，则可以不配置
+    INJECTION_PATH = "com.app.demo.inject.Injection"
+    INJECT_PATH = "com.app.demo.inject.Inject"
+    IGNORE_PATH = "com.app.demo.inject.Ignore"
+
+    INJECT_CLICK = true          //注入所有符合条件的onClick方法，默认为true
+    INJECT_TOUCH = true          //onTouch方法，默认为false
+    INJECT_TOUCH_EVENT = true          //onTouch方法，默认为false
+    INJECT_LONG_CLICK = true     //onLongClick方法，默认为false
+    INJECT_RADIOGROUP = true     //RadioGroup的onCheckedChanged方法，默认为false
+    INJECT_COMPOUNDBUTTON = true //CompoundButton的onCheckedChanged方法，默认为false
+    INJECT_LOG = true            //是否打印日志，默认false
+}
+
+//添加依赖
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        maven {
+            url 'https://jitpack.io'
+        }
+    }
+    dependencies {
+        /*请使用最新的版本，旧的版本可能会有功能缺陷*/
+        classpath 'com.github.wshychbydh:Injection:1.0.6a'
+    }
+}
+
+//应用插件
+apply plugin: com.plugin.inject.InjectPlugin
